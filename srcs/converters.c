@@ -10,14 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	is_space(char c)
-{
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
-}
-
-int			ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int					i;
 	int					signe;
@@ -44,9 +37,56 @@ int			ft_atoi(const char *str)
 	return ((int)(nb * signe));
 }
 
-char	*dec_to_hex(int n)
+void	dec_to_hex(int n, int lower)
 {
+	unsigned int 	nb_unsigned;
+	char			*base;
+	char			modulo;
 
+	base = "0123456789abcdef0123456789ABCDEF";
+	if (n < 0)
+	{
+		nb_unsigned = -n;
+		ft_putchar('-');
+	}
+	else
+		nb_unsigned = n;
+	if (lower == 1)
+		modulo = base[nb_unsigned % 16];
+	else
+		modulo = base[(nb_unsigned % 16) + 16];
+	if (nb_unsigned / 16 == 0)
+	{
+		ft_putchar(modulo);
+		return ;
+	}
+	dec_to_hex(nb_unsigned / 16, lower);
+	ft_putchar(modulo);
+	return ;
 }
 
+void	ft_putnbr(int n)
+{
+	unsigned int	nb_unsigned;
 
+	if (n < 0)
+	{
+		ft_putchar('-');
+		nb_unsigned = (unsigned int)(-1 * n);
+	}
+	else
+		nb_unsigned = (unsigned int)(n);
+	if (nb_unsigned < 10)
+		ft_putchar(48 + nb_unsigned);
+	else
+	{
+		ft_putnbr(nb_unsigned / 10);
+		ft_putnbr(nb_unsigned % 10);
+	}
+}
+
+int main()
+{
+	ft_putnbr(2147483647);
+	return (0);
+}
