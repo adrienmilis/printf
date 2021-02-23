@@ -6,9 +6,11 @@
 /*   By: amilis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:01:05 by amilis            #+#    #+#             */
-/*   Updated: 2021/02/18 15:01:06 by amilis           ###   ########.fr       */
+/*   Updated: 2021/02/23 11:51:08 by amilis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 int		ft_atoi(const char *str)
 {
@@ -37,56 +39,60 @@ int		ft_atoi(const char *str)
 	return ((int)(nb * signe));
 }
 
-void	dec_to_hex(int n, int lower)
+int		dec_to_hex(unsigned int n, int lower)
 {
-	unsigned int 	nb_unsigned;
-	char			*base;
-	char			modulo;
+	char		*base;
+	char		modulo;
+	static int	count;
 
 	base = "0123456789abcdef0123456789ABCDEF";
-	if (n < 0)
-	{
-		nb_unsigned = -n;
-		ft_putchar('-');
-	}
+	if (lower == 0)
+		modulo = base[(n % 16) + 16];
 	else
-		nb_unsigned = n;
-	if (lower == 1)
-		modulo = base[nb_unsigned % 16];
-	else
-		modulo = base[(nb_unsigned % 16) + 16];
-	if (nb_unsigned / 16 == 0)
+		modulo = base[n % 16];
+	if (n / 16 == 0)
 	{
 		ft_putchar(modulo);
-		return ;
+		count++;
+		return (count);
 	}
-	dec_to_hex(nb_unsigned / 16, lower);
+	dec_to_hex(n / 16, lower);
 	ft_putchar(modulo);
-	return ;
+	count++;
+	return (count);
 }
 
-void	ft_putnbr(int n)
+int		ft_putnbr(long n)
 {
-	unsigned int	nb_unsigned;
+	long		number;
+	static int	count;
 
 	if (n < 0)
 	{
 		ft_putchar('-');
-		nb_unsigned = (unsigned int)(-1 * n);
+		count++;
+		number = -n;
 	}
 	else
-		nb_unsigned = (unsigned int)(n);
-	if (nb_unsigned < 10)
-		ft_putchar(48 + nb_unsigned);
+		number = n;
+	if (number < 10)
+	{
+		ft_putchar(48 + number);
+		count++;
+	}
 	else
 	{
-		ft_putnbr(nb_unsigned / 10);
-		ft_putnbr(nb_unsigned % 10);
+		ft_putnbr(number / 10);
+		ft_putnbr(number % 10);
 	}
+	return (count);
 }
 
-int main()
+int		print_pointer(void	*ptr)
 {
-	ft_putnbr(2147483647);
-	return (0);
+	int i;
+
+	ft_putstr("0x");
+	i = dec_to_hex((unsigned long)ptr, 1);
+	return (i + 2);
 }
