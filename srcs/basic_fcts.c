@@ -37,18 +37,23 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_putchar(char c)
+int		ft_putchar(char c)
 {
 	write(1, &c, 1);
+	return (1);
 }
 
 int		ft_putstr(char *str)
 {
-	int	i;
 	int	str_len;
 
-	i = 0;
+	if (str == NULL)
+	{
+		write (1, "(null)", 6);
+		return (6);
+	}
 	str_len = ft_strlen(str);
 	write(1, str, str_len);
 	return (str_len);
 }
+

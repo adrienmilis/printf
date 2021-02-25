@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int					i;
 	int					signe;
@@ -39,7 +39,7 @@ int		ft_atoi(const char *str)
 	return ((int)(nb * signe));
 }
 
-int		dec_to_hex(unsigned int n, int lower)
+int	dec_to_hex(unsigned long n, int lower)
 {
 	char		*base;
 	char		modulo;
@@ -62,7 +62,7 @@ int		dec_to_hex(unsigned int n, int lower)
 	return (count);
 }
 
-int		ft_putnbr(long n)
+int	ft_putnbr(long n)
 {
 	long		number;
 	static int	count;
@@ -88,7 +88,7 @@ int		ft_putnbr(long n)
 	return (count);
 }
 
-int		print_pointer(void	*ptr)
+int	print_pointer(void	*ptr)
 {
 	int i;
 

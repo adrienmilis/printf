@@ -20,13 +20,24 @@
 
 int		is_space(char c);
 int		is_type(char c);
-void	ft_putchar(char c);
+int		ft_strlen(char *str);
+int		ft_putchar(char c);
 int		ft_putstr(char *str);
 
 int		ft_atoi(const char *str);
-int		dec_to_hex(unsigned int n, int lower);
+int		dec_to_hex(unsigned long n, int lower);
 int		ft_putnbr(long n);
 int		print_pointer(void	*ptr);
 
+void	print_zeroes(int n);
+int		is_number(char c);
+int		arg_len(long i, int base);
+
+int		print_conversions(char type, va_list args);
+int		flags(const char *str, va_list args);
+int		ft_printf(const char *str, ...);
+
+int		flag_minus(const char *str, va_list args);
+int 	flag_point(const char *str, va_list args);
 
 #endif
