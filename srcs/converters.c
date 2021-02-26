@@ -88,11 +88,35 @@ int	ft_putnbr(long n)
 	return (count);
 }
 
-int	print_pointer(void	*ptr)
+int	print_pointer(void *ptr)
 {
 	int i;
 
 	ft_putstr("0x");
 	i = dec_to_hex((unsigned long)ptr, 1);
 	return (i + 2);
+}
+
+int	get_len_conv(char type, va_list args_cpy, int *sign)
+{
+	int len_conv;
+	int	arg_num;
+
+	*sign = 0;
+	if (type == 'd' || type == 'i')
+	{
+		arg_num = va_arg(args_cpy, int);
+		if (arg_num < 0)
+			*sign = 1;
+		len_conv = arg_len(arg_num, 10);
+	}
+	if (type == 'u')
+		len_conv = arg_len(va_arg(args_cpy, unsigned int), 10);
+	if (type == 'x' || type == 'X')
+		len_conv = arg_len(va_arg(args_cpy, unsigned int), 16);
+	if (type == 's')
+		len_conv = ft_strlen(va_arg(args_cpy, char*));
+	if (type == 'c')
+		len_conv = 1;
+	return (len_conv);
 }

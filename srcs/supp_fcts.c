@@ -31,6 +31,18 @@ void	print_zeroes(int n)
 	}
 }
 
+void	print_spaces(int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		write(1, " ", 1);
+		i++;
+	}
+}
+
 int		arg_len(long i, int base)
 {
 	int	len;
@@ -46,4 +58,16 @@ int		arg_len(long i, int base)
 		len++;
 	}
 	return (len);
+}
+
+void	ft_putstr_trunc(char *str, int len)
+{
+	char	*trunc_str;
+	int		i;
+
+	if (str == NULL)
+		trunc_str = "(null)";
+	else
+		trunc_str = str;
+	write(1, trunc_str, len);
 }

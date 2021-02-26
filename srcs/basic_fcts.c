@@ -32,6 +32,8 @@ int		ft_strlen(char *str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (6);
 	while (str[i])
 		i++;
 	return (i);
@@ -49,11 +51,10 @@ int		ft_putstr(char *str)
 
 	if (str == NULL)
 	{
-		write (1, "(null)", 6);
+		write(1, "(null)", 6);
 		return (6);
 	}
 	str_len = ft_strlen(str);
 	write(1, str, str_len);
 	return (str_len);
 }
-

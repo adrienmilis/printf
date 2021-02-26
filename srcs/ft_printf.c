@@ -40,7 +40,9 @@ int	flags(const char *str, va_list args)
 
 	i = 0;
 	len = 0;
-	if (str[i] == '-')
+	if (str[i] >= '1' && str[i] <= '9')
+		len = flag_width(str, args);
+	else if (str[i] == '-')
 		len = flag_minus(str + 1, args);
 /*	else if (str[i] == '0')
 		len = flag//fct*/
@@ -51,49 +53,57 @@ int	flags(const char *str, va_list args)
 	return (len);
 }
 
-int	ft_printf(const char *str, ...)
+int	ft_printf_start(const char *str, va_list args)
 {
-	int		i;
-	va_list args;
-	int 	len;
-	int 	count;
+	int	i;
+	int	len;
 
-	va_start(args, str);
 	i = 0;
 	len = 0;
-	count = 0;
 	while (str[i])
 	{
 		while (str[i] != '%' && str[i])
-			count += ft_putchar(str[i++]);
+			len += ft_putchar(str[i++]);
 		if (str[i++] == 0)
-			return (count + len);
+			return (len);
 		if (is_type(str[i]))
 			len += print_conversions(str[i++], args);
-		else if (str[i] == '-' || str[i] == '0' || str[i] == '.' || str[i] == '*')
-			{
-				len += flags(str + i, args);
-				while (!is_type(str[i]))
-					i++;
+		else if (str[i] == '-' || is_number(str[i])
+					|| str[i] == '.' || str[i] == '*')
+		{
+			len += flags(str + i, args);
+			while (!is_type(str[i]))
 				i++;
-			}
+			i++;
+		}
 		else
-			count += ft_putchar(str[i++]); //gere le % et les mauvais types normalement
+			len += ft_putchar(str[i++]);
 	}
-	va_end(args);
-	return (count + len);
+	return (len);
 }
 
-int main()
+int	ft_printf(const char *str, ...)
 {
-	unsigned int	i = UINT_MAX;
+	va_list args;
+	int		len;
+
+	va_start(args, str);
+	len = ft_printf_start(str, args);
+	va_end(args);
+	return (len);
+}
+
+int	main()
+{
+	int	i = INT_MIN;
+	unsigned int	u = 0;
 	char	*s = "ceci est un test";
 	char 	c = 49;
 	int		ft_len;
 	int		sd_len;
 
-	ft_len = ft_printf("%.s\n", s);
-	sd_len = printf("%.s\n", s);
+	ft_len = ft_printf("%-20.50dX\n", i);
+	sd_len = printf("%-20.50dX\n", i);
 	printf("ft : %d, std : %d\n", ft_len, sd_len);
 	return (0);
 }
