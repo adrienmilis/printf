@@ -43,7 +43,7 @@ void	print_spaces(int n)
 	}
 }
 
-int		arg_len(long i, int base)
+int		arg_len(long long i, int base)
 {
 	int	len;
 
@@ -63,7 +63,6 @@ int		arg_len(long i, int base)
 void	ft_putstr_trunc(char *str, int len)
 {
 	char	*trunc_str;
-	int		i;
 
 	if (str == NULL)
 		trunc_str = "(null)";

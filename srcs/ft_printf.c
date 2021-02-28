@@ -14,8 +14,8 @@
 
 int	print_conversions(char type, va_list args)
 {
-	int	len;
-
+	int		len;
+	
 	if (type == 'c')
 		len = ft_putchar(va_arg(args, int));
 	if (type == 's')
@@ -23,33 +23,33 @@ int	print_conversions(char type, va_list args)
 	if (type == 'p')
 		len = print_pointer(va_arg(args, void*));
 	if (type == 'd' || type == 'i')
-		len = ft_putnbr(va_arg(args, int));
+		len = ft_putnbr(va_arg(args, int), 1);
 	if (type == 'u')
-		len = ft_putnbr(va_arg(args, unsigned int));
+		len = ft_putnbr(va_arg(args, unsigned int), 1);
 	if (type == 'x')
-		len = dec_to_hex(va_arg(args, unsigned int), 1);
+		len = dec_to_hex(va_arg(args, unsigned int), 1, 1);
 	if (type == 'X')
-		len = dec_to_hex(va_arg(args, unsigned int), 0);
+		len = dec_to_hex(va_arg(args, unsigned int), 0, 1);
 	return (len);
 }
 
 int	flags(const char *str, va_list args)
 {
-	int	i;
-	int len;
+	int		i;
+	int 	len;
 
 	i = 0;
 	len = 0;
 	if (str[i] >= '1' && str[i] <= '9')
 		len = flag_width(str, args);
 	else if (str[i] == '-')
-		len = flag_minus(str + 1, args);
-/*	else if (str[i] == '0')
-		len = flag//fct*/
+		len = flag_minus(str + 1, args, get_width(str + 1, args, 0));
+	else if (str[i] == '0')
+		len = flag_zero(str + 1, args);
 	else if (str[i] == '.')
-		len = flag_point(str + 1, args);
-/*	else if (str[i] == '*')
-		len = //fct*/
+		len = flag_point(str + 1, args, 0, 0);
+	else if (str[i] == '*')
+		len = flag_width(str, args);
 	return (len);
 }
 
@@ -93,17 +93,18 @@ int	ft_printf(const char *str, ...)
 	return (len);
 }
 
-int	main()
+/*int	main()
 {
-	int	i = INT_MIN;
-	unsigned int	u = 0;
+	int	i = -5462;
+	unsigned int	u = UINT_MAX;
 	char	*s = "ceci est un test";
 	char 	c = 49;
 	int		ft_len;
 	int		sd_len;
 
-	ft_len = ft_printf("%-20.50dX\n", i);
-	sd_len = printf("%-20.50dX\n", i);
+	//" [%-*.*d] [%*.*d] ", 4, 5, 10, 10, 21, -10
+	ft_len = ft_printf("%0-*.*d\n", 6, 2, 102);
+	sd_len = printf("%0-*.*d\n", 6, 2, 102);
 	printf("ft : %d, std : %d\n", ft_len, sd_len);
 	return (0);
-}
+}*/

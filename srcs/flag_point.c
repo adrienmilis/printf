@@ -12,10 +12,14 @@
 
 #include "ft_printf.h"
 
-int	get_width(const char *str, va_list args)
+int	get_width(const char *str, va_list args, va_list args_cpy)
 {
 	if (str[0] == '*')
+	{
+		if (args_cpy != 0)
+			va_arg(args_cpy, int);
 		return (va_arg(args, int));
+	}
 	else if (is_number(str[0]))
 		return (ft_atoi(str));
 	else
@@ -35,7 +39,7 @@ int	flag_point_int(va_list args, int prec)
 		if (arg < 0)
 			ft_putchar('-');
 		print_zeroes(diff);
-		arg < (0) ? ft_putnbr(-arg) : ft_putnbr(arg);
+		arg < (0) ? ft_putnbr(-arg, 1) : ft_putnbr(arg, 1);
 		if (arg < 0)
 			return (diff + arg_len(arg, 10) + 1);
 		else
@@ -43,7 +47,7 @@ int	flag_point_int(va_list args, int prec)
 	}
 	else
 	{
-		ft_putnbr(arg);
+		ft_putnbr(arg, 1);
 		if (arg < 0)
 			return (arg_len(arg, 10) + 1);
 		else
@@ -69,42 +73,41 @@ int	flag_point_unsigned(va_list args, int prec, char type)
 	if ((diff = prec - len_conv) > 0)
 		print_zeroes(diff);
 	if (type == 'u')
-		ft_putnbr(arg);
+		ft_putnbr(arg, 1);
 	if (type == 'x')
-		dec_to_hex(arg, 1);
+		dec_to_hex(arg, 1, 1);
 	if (type == 'X')
-		dec_to_hex(arg, 0);
+		dec_to_hex(arg, 0, 1);
 	if (diff > 0)
 		return (diff + len_conv);
 	else
 		return (len_conv);
 }
 
-int	flag_point(const char *str, va_list args)
+int	flag_point(const char *str, va_list args, int prec_as_param, int prec)
 {
-	int		prec;
-	int		i;
 	char	*arg_str;
 
-	i = 0;
-	prec = get_width(str, args);
-	while (!is_type(str[i]))
-		i++;
-	if (str[i] == 'd' || str[i] == 'i')
+	if (prec_as_param == 0)
+		prec = get_width(str, args, 0);
+	while (!is_type(str[0]))
+		str++;
+	if (str[0] == 'd' || str[0] == 'i')
 		return (flag_point_int(args, prec));
-	if (str[i] == 'u')
-		return (flag_point_unsigned(args, prec, str[i]));
-	if (str[i] == 'x' || str[i] == 'X')
-		return (flag_point_unsigned(args, prec, str[i]));
-	if (str[i] == 's')
+	if (str[0] == 'u')
+		return (flag_point_unsigned(args, prec, str[0]));
+	if (str[0] == 'x' || str[0] == 'X')
+		return (flag_point_unsigned(args, prec, str[0]));
+	if (str[0] == 's')
 	{
 		arg_str = va_arg(args, char*);
-		if (ft_strlen(arg_str) > prec)
+		if (ft_strlen(arg_str) > prec && prec >= 0)
+		{
 			ft_putstr_trunc(arg_str, prec);
-		else
-			ft_putstr(arg_str);
-		return (ft_strlen(arg_str) > prec ? prec : ft_strlen(arg_str));
+			return (prec);
+		}
+		return (ft_putstr(arg_str));
 	}
 	else
-		return (print_conversions(str[i], args));
+		return (print_conversions(str[0], args));
 }

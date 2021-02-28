@@ -39,12 +39,14 @@ int	ft_atoi(const char *str)
 	return ((int)(nb * signe));
 }
 
-int	dec_to_hex(unsigned long n, int lower)
+int	dec_to_hex(unsigned long n, int lower, int first_call)
 {
 	char		*base;
 	char		modulo;
 	static int	count;
 
+	if (first_call == 1)
+		count = 0;
 	base = "0123456789abcdef0123456789ABCDEF";
 	if (lower == 0)
 		modulo = base[(n % 16) + 16];
@@ -56,17 +58,19 @@ int	dec_to_hex(unsigned long n, int lower)
 		count++;
 		return (count);
 	}
-	dec_to_hex(n / 16, lower);
+	dec_to_hex(n / 16, lower, 0);
 	ft_putchar(modulo);
 	count++;
 	return (count);
 }
 
-int	ft_putnbr(long n)
+int	ft_putnbr(long n, int first_call)
 {
 	long		number;
 	static int	count;
 
+	if (first_call == 1)
+		count = 0;
 	if (n < 0)
 	{
 		ft_putchar('-');
@@ -82,8 +86,8 @@ int	ft_putnbr(long n)
 	}
 	else
 	{
-		ft_putnbr(number / 10);
-		ft_putnbr(number % 10);
+		ft_putnbr(number / 10, 0);
+		ft_putnbr(number % 10, 0);
 	}
 	return (count);
 }
@@ -93,14 +97,15 @@ int	print_pointer(void *ptr)
 	int i;
 
 	ft_putstr("0x");
-	i = dec_to_hex((unsigned long)ptr, 1);
+	i = dec_to_hex((unsigned long)ptr, 1, 1);
 	return (i + 2);
 }
 
 int	get_len_conv(char type, va_list args_cpy, int *sign)
 {
-	int len_conv;
-	int	arg_num;
+	int 	len_conv;
+	int		arg_num;
+	void	*ptr;
 
 	*sign = 0;
 	if (type == 'd' || type == 'i')
@@ -114,6 +119,11 @@ int	get_len_conv(char type, va_list args_cpy, int *sign)
 		len_conv = arg_len(va_arg(args_cpy, unsigned int), 10);
 	if (type == 'x' || type == 'X')
 		len_conv = arg_len(va_arg(args_cpy, unsigned int), 16);
+	if (type == 'p')
+	{
+		ptr = va_arg(args_cpy, void*);
+		len_conv = arg_len((unsigned long)ptr, 16) + 2;
+	}
 	if (type == 's')
 		len_conv = ft_strlen(va_arg(args_cpy, char*));
 	if (type == 'c')

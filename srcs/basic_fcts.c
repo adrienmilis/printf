@@ -12,14 +12,14 @@
 
 #include "ft_printf.h"
 
-int		is_space(char c)
+int	is_space(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
 
-int		is_type(char c)
+int	is_type(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' ||
 		c == 'i' || c == 'u' || c == 'x' || c == 'X')
@@ -27,7 +27,7 @@ int		is_type(char c)
 	return (0);
 }
 
-int		ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	i;
 
@@ -39,13 +39,13 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-int		ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
 }
 
-int		ft_putstr(char *str)
+int	ft_putstr(char *str)
 {
 	int	str_len;
 
