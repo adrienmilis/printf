@@ -14,13 +14,18 @@
 
 int	get_width(const char *str, va_list args, va_list args_cpy)
 {
-	if (str[0] == '*')
+	int	i;
+
+	i = 0;
+	while (str[i] != '*' && !(str[i] >= '1' && str[i] <= '9') && str[i] != '.' && !is_type(str[i]))
+		i++;
+	if (str[i] == '*')
 	{
 		if (args_cpy != 0)
 			va_arg(args_cpy, int);
 		return (va_arg(args, int));
 	}
-	else if (is_number(str[0]))
+	else if (is_number(str[i]))
 		return (ft_atoi(str));
 	else
 		return (0);

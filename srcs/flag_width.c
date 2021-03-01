@@ -108,6 +108,10 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 	while (!is_type(str[i]))
 		i++;
 	len = get_len_conv(str[i], args_cpy, &sign);
+	/*if (prec == 0 && len == -1)     pour gerer prec = 0 et arg = 0
+		len_print = 0;
+	else
+		len_print = 1;*/
 	if (prec < len && str[i] != 's' && str[i] != 'c')
 		len_print = (sign == 1) ? (len + 1) : len;
 	else if (prec >= len && str[i] != 's' && str[i] != 'c')

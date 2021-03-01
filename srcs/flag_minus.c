@@ -62,15 +62,21 @@ int	flag_zero(const char *str, va_list args)
 	int		sign;
 	int		len_conv;
 	va_list args_cpy;
+	int		i;
 
+	i = 0;
 	va_copy(args_cpy, args);
+	while (!is_type(str[i]) && str[i] != '-' && str[i] != '.')
+		i++;
+	if (str[i] == '.')
+		return (flags(str, args));
 	width = get_width(str, args, args_cpy);
-	while (!is_type(str[0]))
-		str++;
-	len_conv = get_len_conv(str[0], args_cpy, &sign);
+	if (width < 0 || str[i] == '-')
+		return (flag_minus(str + 1, args, width));
+	len_conv = get_len_conv(str[i], args_cpy, &sign);
 	if (sign == 1)
 		len_conv++;
-	if (str[0] == 'd' || str[0] == 'i')
+	if (str[i] == 'd' || str[i] == 'i')
 		return (flag_zero_int(args, width, len_conv));
 	else
 	{

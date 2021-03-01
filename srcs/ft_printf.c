@@ -93,7 +93,7 @@ int	ft_printf(const char *str, ...)
 	return (len);
 }
 
-/*int	main()
+int	main()
 {
 	int	i = -5462;
 	unsigned int	u = UINT_MAX;
@@ -103,8 +103,8 @@ int	ft_printf(const char *str, ...)
 	int		sd_len;
 
 	//" [%-*.*d] [%*.*d] ", 4, 5, 10, 10, 21, -10
-	ft_len = ft_printf("%0-*.*d\n", 6, 2, 102);
-	sd_len = printf("%0-*.*d\n", 6, 2, 102);
+	ft_len = ft_printf("[%1.0d]\n", 0);
+	sd_len = printf("[%1.0d]\n", 0);
 	printf("ft : %d, std : %d\n", ft_len, sd_len);
 	return (0);
-}*/
+}
