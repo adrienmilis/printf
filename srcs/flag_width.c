@@ -103,22 +103,18 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 	int		i;
 
 	i = 0;
-	sign = 0;
 	prec = get_width(str, args, args_cpy);
 	while (!is_type(str[i]))
 		i++;
 	len = get_len_conv(str[i], args_cpy, &sign);
-	/*if (prec == 0 && len == -1)     pour gerer prec = 0 et arg = 0
-		len_print = 0;
-	else
-		len_print = 1;*/
-	if (prec < len && str[i] != 's' && str[i] != 'c')
+	len_print = (prec == 0 && len == -1) ? 0 : 1;
+	if (prec < len && str[i] != 's' && str[i] != 'c' && len != -1)
 		len_print = (sign == 1) ? (len + 1) : len;
-	else if (prec >= len && str[i] != 's' && str[i] != 'c')
+	else if (prec >= len && prec >= 0 && str[i] != 's' && str[i] != 'c')
 		len_print = (sign == 1) ? (prec + 1) : prec;
 	else if (str[i] == 'c')
 		len_print = 1;
-	else
+	else if (str[i] == 's')
 		len_print = (len > prec) ? prec : len;
 	if (len_print < width)
 		print_spaces(width - len_print);
@@ -126,15 +122,16 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 	return ((len_print < width) ? width : len);
 }
 
-int	flag_width(const char *str, va_list args)
+int	flag_width(const char *str, va_list args, int width_as_param, int width)
 {
-	int		width;
+	//int		width;
 	int		len_ret;
 	va_list	args_cpy;
 	int		base;
 
 	va_copy(args_cpy, args);
-	width = get_width(str, args, args_cpy);
+	if (width_as_param == 0)
+		width = get_width(str, args, args_cpy);
 	if (width < 0)
 		return (flag_minus(str, args, width));
 	while (!is_type(str[0]) && str[0] != '.')

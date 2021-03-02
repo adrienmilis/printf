@@ -16,14 +16,15 @@ int		ft_atoi(const char *str);
 int		dec_to_hex(unsigned long n, int lower, int first_call);
 int		ft_putnbr(long n, int first_call);
 int		print_pointer(void *ptr);
-int		get_len_conv(char type, va_list args_cpy, int *sign);
-
 int		is_number(char c);
+
+int 	get_len_conv2(char type, va_list args_cpy);
+int		get_len_conv(char type, va_list args_cpy, int *sign);
+int		arg_len(long long i, int base);
 void	print_zeroes(int n);
 void	print_spaces(int n);
-int		arg_len(long long i, int base);
-void	ft_putstr_trunc(char *str, int len);
 
+void	ft_putstr_trunc(char *str, int len);
 int		print_conversions(char type, va_list args);
 int		flags(const char *str, va_list args);
 int		ft_printf_start(const char *str, va_list args);
@@ -38,7 +39,7 @@ int		width_int(va_list args, int width);
 int		width_unsigned(va_list args, int width, char type, int base);
 int		width_char_or_string(va_list args, int width, char type);
 int		width_point(const char *str, va_list args, int width, va_list args_cpy);
-int		flag_width(const char *str, va_list args);
+int		flag_width(const char *str, va_list args, int width_as_param, int width);
 
 int		flag_minus(const char *str, va_list args, int width);
 int		flag_zero_int(va_list args, int width, int len_conv);

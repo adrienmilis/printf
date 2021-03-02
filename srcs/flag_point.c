@@ -17,7 +17,8 @@ int	get_width(const char *str, va_list args, va_list args_cpy)
 	int	i;
 
 	i = 0;
-	while (str[i] != '*' && !(str[i] >= '1' && str[i] <= '9') && str[i] != '.' && !is_type(str[i]))
+	while (str[i] != '*' && !(str[i] >= '1' && str[i] <= '9')
+		&& str[i] != '.' && !is_type(str[i]))
 		i++;
 	if (str[i] == '*')
 	{

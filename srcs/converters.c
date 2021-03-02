@@ -101,32 +101,9 @@ int	print_pointer(void *ptr)
 	return (i + 2);
 }
 
-int	get_len_conv(char type, va_list args_cpy, int *sign)
+int	is_number(char c)
 {
-	int 	len_conv;
-	int		arg_num;
-	void	*ptr;
-
-	*sign = 0;
-	if (type == 'd' || type == 'i')
-	{
-		arg_num = va_arg(args_cpy, int);
-		if (arg_num < 0)
-			*sign = 1;
-		len_conv = arg_len(arg_num, 10);
-	}
-	if (type == 'u')
-		len_conv = arg_len(va_arg(args_cpy, unsigned int), 10);
-	if (type == 'x' || type == 'X')
-		len_conv = arg_len(va_arg(args_cpy, unsigned int), 16);
-	if (type == 'p')
-	{
-		ptr = va_arg(args_cpy, void*);
-		len_conv = arg_len((unsigned long)ptr, 16) + 2;
-	}
-	if (type == 's')
-		len_conv = ft_strlen(va_arg(args_cpy, char*));
-	if (type == 'c')
-		len_conv = 1;
-	return (len_conv);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

@@ -12,11 +12,61 @@
 
 #include "ft_printf.h"
 
-int		is_number(char c)
+int		arg_len(long long i, int base)
 {
-	if (c >= '0' && c <= '9')
+	int	len;
+
+	len = 0;
+	if (i < 0)
+		i = -i;
+	if (i == 0)
 		return (1);
-	return (0);
+	while (i > 0)
+	{
+		i /= base;
+		len++;
+	}
+	return (len);
+}
+
+int		get_len_conv2(char type, va_list args_cpy)
+{
+	unsigned int	arg_unsigned;
+	int				base;
+
+	arg_unsigned = va_arg(args_cpy, unsigned int);
+	if (type == 'u')
+		base = 10;
+	else
+		base = 16;
+	if (arg_unsigned == 0)
+		return (-1);
+	return (arg_len(arg_unsigned, base));
+}
+
+int		get_len_conv(char type, va_list args_cpy, int *sign)
+{
+	int	len_conv;
+	int	arg_int;
+
+	if (type == 'd' || type == 'i')
+	{
+		if ((arg_int = va_arg(args_cpy, int)) == 0)
+			return (-1);
+		*sign = (arg_int < 0) ? 1 : 0;
+		return (arg_len(arg_int, 10));
+	}
+	if (type == 'u')
+		return (get_len_conv2(type, args_cpy));
+	if (type == 'x' || type == 'X')
+		return (get_len_conv2(type, args_cpy));
+	if (type == 'p')
+		len_conv = arg_len((unsigned long)va_arg(args_cpy, void*), 16) + 2;
+	if (type == 's')
+		len_conv = ft_strlen(va_arg(args_cpy, char*));
+	if (type == 'c')
+		len_conv = 1;
+	return (len_conv);
 }
 
 void	print_zeroes(int n)
@@ -41,32 +91,4 @@ void	print_spaces(int n)
 		write(1, " ", 1);
 		i++;
 	}
-}
-
-int		arg_len(long long i, int base)
-{
-	int	len;
-
-	len = 0;
-	if (i < 0)
-		i = -i;
-	if (i == 0)
-		return (1);
-	while (i > 0)
-	{
-		i /= base;
-		len++;
-	}
-	return (len);
-}
-
-void	ft_putstr_trunc(char *str, int len)
-{
-	char	*trunc_str;
-
-	if (str == NULL)
-		trunc_str = "(null)";
-	else
-		trunc_str = str;
-	write(1, trunc_str, len);
 }
