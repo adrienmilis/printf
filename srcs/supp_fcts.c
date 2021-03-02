@@ -49,6 +49,8 @@ int		get_len_conv(char type, va_list args_cpy, int *sign)
 	int	len_conv;
 	int	arg_int;
 
+	if (type == '%')
+		return (1);
 	if (type == 'd' || type == 'i')
 	{
 		if ((arg_int = va_arg(args_cpy, int)) == 0)
@@ -86,6 +88,8 @@ void	print_spaces(int n)
 	int	i;
 
 	i = 0;
+	if (n <= 0)
+		return ;
 	while (i < n)
 	{
 		write(1, " ", 1);

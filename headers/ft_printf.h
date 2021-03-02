@@ -35,7 +35,7 @@ int		flag_point_int(va_list args, int prec);
 int		flag_point_unsigned(va_list args, int prec, char type);
 int		flag_point(const char *str, va_list args, int prec_as_param, int prec);
 
-int		width_int(va_list args, int width);
+int		width_int(va_list args, int width, char type);
 int		width_unsigned(va_list args, int width, char type, int base);
 int		width_char_or_string(va_list args, int width, char type);
 int		width_point(const char *str, va_list args, int width, va_list args_cpy);

@@ -41,6 +41,8 @@ int		print_conversions(char type, va_list args)
 		len = dec_to_hex(va_arg(args, unsigned int), 1, 1);
 	if (type == 'X')
 		len = dec_to_hex(va_arg(args, unsigned int), 0, 1);
+	if (type == '%')
+		len = ft_putchar('%');
 	return (len);
 }
 
@@ -79,8 +81,8 @@ int		ft_printf_start(const char *str, va_list args)
 			return (len);
 		if (is_type(str[i]))
 			len += print_conversions(str[i++], args);
-		else if (str[i] == '-' || is_number(str[i])
-					|| str[i] == '.' || str[i] == '*')
+		else if (str[i] == '-' || is_number(str[i]) ||
+					str[i] == '.' || str[i] == '*')
 		{
 			len += flags(str + i, args);
 			while (!is_type(str[i]))
@@ -131,8 +133,8 @@ int		ft_printf(const char *str, ...)
 	int		sd_len;
 
 	//" [%-*.*d] [%*.*d] ", 4, 5, 10, 10, 21, -10
-	ft_len = ft_printf("[%0*.*d]\n", 21, 10, -101);
-	sd_len = printf("[%0*.*d]\n", 21, 10, -101);
+	ft_len = ft_printf("%0*.*d\n", 10, 21, -101);
+	sd_len = printf("%0*.*d\n", 10, 21, -101);
 	printf("ft : %d, std : %d\n", ft_len, sd_len);
 	return (0);
 }*/

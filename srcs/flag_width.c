@@ -12,29 +12,26 @@
 
 #include "ft_printf.h"
 
-int	width_int(va_list args, int width)
+int	width_int(va_list args, int width, char type)
 {
 	int	arg_num;
 	int	len_conv;
 
+	if (type == '%')
+	{
+		print_spaces(width - 1);
+		ft_putchar('%');
+		return ((width - 1 > 0) ? width : 1);
+	}
 	arg_num = va_arg(args, int);
 	len_conv = arg_len(arg_num, 10);
 	if (arg_num < 0)
 		len_conv += 1;
+	print_spaces(width - len_conv);
+	ft_putnbr(arg_num, 1);
 	if (width - len_conv > 0)
-	{
-		print_spaces(width - len_conv);
-		ft_putnbr(arg_num, 1);
 		return (width);
-	}
-	else
-	{
-		ft_putnbr(arg_num, 1);
-		if (arg_num < 0)
-			return (len_conv);
-		else
-			return (len_conv);
-	}
+	return (len_conv);
 }
 
 int	width_unsigned(va_list args, int width, char type, int base)
@@ -124,7 +121,6 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 
 int	flag_width(const char *str, va_list args, int width_as_param, int width)
 {
-	//int		width;
 	int		len_ret;
 	va_list	args_cpy;
 	int		base;
@@ -139,8 +135,8 @@ int	flag_width(const char *str, va_list args, int width_as_param, int width)
 	base = (str[0] == 'u') ? 10 : 16;
 	if (is_type(str[0]))
 	{
-		if (str[0] == 'd' || str[0] == 'i')
-			len_ret = width_int(args, width);
+		if (str[0] == 'd' || str[0] == 'i' || str[0] == '%')
+			len_ret = width_int(args, width, str[0]);
 		if (str[0] == 'u' || str[0] == 'x' || str[0] == 'X' || str[0] == 'p')
 			len_ret = width_unsigned(args, width, str[0], base);
 		if (str[0] == 'c' || str[0] == 's')

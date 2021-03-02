@@ -62,13 +62,18 @@ int	flag_zero(const char *str, va_list args)
 	va_list args_cpy;
 	int		i;
 	int 	prec;
+	char	type;
 
 	i = 0;
 	va_copy(args_cpy, args);
+	while (!is_type(str[i]))
+		i++;
+	type = str[i];
+	i = 0;
 	while (!is_type(str[i]) && str[i] != '-' && str[i] != '.')
 		i++;
 	width = get_width(str, args, args_cpy);
-	if (str[i] == '.')
+	if (str[i] == '.' && type != '%')
 	{
 		prec = get_width(str + i + 1, args_cpy, 0); // get la width avant pour avoir la bonne prec (on ne peut pas avoir direct la prec)
 		if (prec >= 0)
