@@ -1,4 +1,4 @@
-DIR = ./srcs/
+NAME = libftprintf.a
 
 SRCS = srcs/basic_fcts.c \
 		srcs/converters.c \
@@ -7,29 +7,33 @@ SRCS = srcs/basic_fcts.c \
 		srcs/flag_width.c \
 		srcs/ft_printf.c \
 		srcs/supp_fcts.c
-NAME = libftprintf.a
-OBJS = $(SRCS:%.c=%.o)
-FLAGS = -Wall -Wextra -Werror -c -I./headers
-GCC = gcc
-RM = rm -rf
+
+OTH_OBJS = basic_fcts.o \
+		converters.o \
+		flag_minus.o \
+		flag_point.o \
+		flag_width.o \
+		ft_printf.o \
+		supp_fcts.o
+
+CC = gcc
+
+CFLAGS = -c -Wall -Wextra -Werror -I./headers
+
+OBJS = $(SRCS:.c=.o)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(SRCS)
+	ar -rcs $(NAME) $(OBJS)
 
 all: $(NAME)
 
-%.o: %.c
-	@echo "Compiling $<"
-	@$(GCC) $(FLAGS) $< -o $(<:c=o)
-	@echo "Compiling OK!"
-
-$(NAME): $(OBJS)
-	$(GCC) $(FLAGS) $(SRCS)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
-
 clean:
-	$(RM) *.o
+	rm -rf $(OBJS)
+	rm -rf $(OTH_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 

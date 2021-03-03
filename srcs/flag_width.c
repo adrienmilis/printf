@@ -21,7 +21,8 @@ int	width_int(va_list args, int width, char type)
 	{
 		print_spaces(width - 1);
 		ft_putchar('%');
-		return ((width - 1 > 0) ? width : 1);
+		width = (width - 1 > 0) ? width : 1;
+		return (width);
 	}
 	arg_num = va_arg(args, int);
 	len_conv = arg_len(arg_num, 10);
@@ -41,15 +42,13 @@ int	width_unsigned(va_list args, int width, char type, int base)
 	void			*ptr;
 
 	if (type == 'u' || type == 'x' || type == 'X')
-	{
 		arg_unsigned = va_arg(args, unsigned int);
+	if (type == 'u' || type == 'x' || type == 'X')
 		len_conv = arg_len(arg_unsigned, base);
-	}
-	else
-	{
+	if (type == 'p')
 		ptr = va_arg(args, void*);
-		len_conv = arg_len((unsigned long)ptr, 16) + 2;
-	}
+	if (type == 'p')
+		len_conv = arg_len((unsigned long)(ptr), 16) + 2;
 	if (len_conv < width)
 		print_spaces(width - len_conv);
 	if (type == 'u')
@@ -60,7 +59,9 @@ int	width_unsigned(va_list args, int width, char type, int base)
 		dec_to_hex(arg_unsigned, 0, 1);
 	if (type == 'p')
 		print_pointer(ptr);
-	return ((len_conv < width) ? width : len_conv);
+	if (len_conv < width)
+		return (width);
+	return (len_conv);
 }
 
 int	width_char_or_string(va_list args, int width, char type)
@@ -109,14 +110,14 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 		len_print = (sign == 1) ? (len + 1) : len;
 	else if (prec >= len && prec >= 0 && str[i] != 's' && str[i] != 'c')
 		len_print = (sign == 1) ? (prec + 1) : prec;
-	else if (str[i] == 'c')
-		len_print = 1;
 	else if (str[i] == 's')
-		len_print = (len > prec) ? prec : len;
+		len_print = (len > prec && prec >= 0) ? prec : len;
 	if (len_print < width)
 		print_spaces(width - len_print);
 	len = flag_point(str, args, 1, prec);
-	return ((len_print < width) ? width : len);
+	if (len_print < width)
+		return (width);
+	return (len);
 }
 
 int	flag_width(const char *str, va_list args, int width_as_param, int width)

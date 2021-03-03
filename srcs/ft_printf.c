@@ -6,7 +6,7 @@
 /*   By: amilis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 13:25:43 by amilis            #+#    #+#             */
-/*   Updated: 2021/02/23 13:25:44 by amilis           ###   ########.fr       */
+/*   Updated: 2021/03/03 12:09:41 by amilis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ int		ft_printf(const char *str, ...)
 	return (len);
 }
 
-/*int	main()
+/*int main()
 {
 	int		a = 0;
-	int		b = -1;
+	int		b = -2;
 	char	c = 'a';
 	int		d = 2147483647;
 	int		e = -2147483648;
@@ -132,9 +132,8 @@ int		ft_printf(const char *str, ...)
 	int		ft_len;
 	int		sd_len;
 
-	//" [%-*.*d] [%*.*d] ", 4, 5, 10, 10, 21, -10
-	ft_len = ft_printf("%0*.*d\n", 10, 21, -101);
-	sd_len = printf("%0*.*d\n", 10, 21, -101);
+	ft_len = ft_printf("[%*.*s]\n", a, b, n);
+	sd_len = printf("[%*.*s]\n", a, b, n);
 	printf("ft : %d, std : %d\n", ft_len, sd_len);
 	return (0);
 }*/

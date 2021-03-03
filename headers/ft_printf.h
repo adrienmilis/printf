@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amilis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/03 12:09:54 by amilis            #+#    #+#             */
+/*   Updated: 2021/03/03 12:10:45 by amilis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 
 # define FT_PRINTF_H
@@ -18,7 +30,7 @@ int		ft_putnbr(long n, int first_call);
 int		print_pointer(void *ptr);
 int		is_number(char c);
 
-int 	get_len_conv2(char type, va_list args_cpy);
+int		get_len_conv2(char type, va_list args_cpy);
 int		get_len_conv(char type, va_list args_cpy, int *sign);
 int		arg_len(long long i, int base);
 void	print_zeroes(int n);
@@ -39,10 +51,12 @@ int		width_int(va_list args, int width, char type);
 int		width_unsigned(va_list args, int width, char type, int base);
 int		width_char_or_string(va_list args, int width, char type);
 int		width_point(const char *str, va_list args, int width, va_list args_cpy);
-int		flag_width(const char *str, va_list args, int width_as_param, int width);
+int		flag_width(const char *str, va_list args,
+					int width_as_param, int width);
 
 int		flag_minus(const char *str, va_list args, int width);
 int		flag_zero_int(va_list args, int width, int len_conv);
+int		flag_zero2(const char *str, va_list args, va_list args_cpy, int width);
 int		flag_zero(const char *str, va_list args);
 
 #endif
