@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
-# include <stdio.h> // a enlever
 
 int		is_space(char c);
 int		is_type(char c);
@@ -27,17 +26,17 @@ int		ft_putstr(char *str);
 int		ft_atoi(const char *str);
 int		dec_to_hex(unsigned long n, int lower, int first_call);
 int		ft_putnbr(long n, int first_call);
-int		print_pointer(void *ptr);
+int		print_pointer(void *ptr, int is_point);
 int		is_number(char c);
 
-int		get_len_conv2(char type, va_list args_cpy);
-int		get_len_conv(char type, va_list args_cpy, int *sign);
+int		get_len_conv2(char type, va_list args_cpy, int is_point);
+int		get_len_conv(char type, va_list args_cpy, int *sign, int is_point);
 int		arg_len(long long i, int base);
 void	print_zeroes(int n);
 void	print_spaces(int n);
 
 void	ft_putstr_trunc(char *str, int len);
-int		print_conversions(char type, va_list args);
+int		print_conversions(char type, va_list args, int is_point);
 int		flags(const char *str, va_list args);
 int		ft_printf_start(const char *str, va_list args);
 int		ft_printf(const char *str, ...);

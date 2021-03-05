@@ -29,11 +29,19 @@ int		arg_len(long long i, int base)
 	return (len);
 }
 
-int		get_len_conv2(char type, va_list args_cpy)
+int		get_len_conv2(char type, va_list args_cpy, int is_point)
 {
 	unsigned int	arg_unsigned;
 	int				base;
+	unsigned long	ptr;
 
+	if (type == 'p')
+	{
+		ptr = (unsigned long)va_arg(args_cpy, void*);
+		if (ptr == 0 && is_point == 1)
+			return (2);
+		return (arg_len(ptr, 16) + 2);
+	}
 	arg_unsigned = va_arg(args_cpy, unsigned int);
 	if (type == 'u')
 		base = 10;
@@ -44,7 +52,7 @@ int		get_len_conv2(char type, va_list args_cpy)
 	return (arg_len(arg_unsigned, base));
 }
 
-int		get_len_conv(char type, va_list args_cpy, int *sign)
+int		get_len_conv(char type, va_list args_cpy, int *sign, int is_point)
 {
 	int	len_conv;
 	int	arg_int;
@@ -59,11 +67,11 @@ int		get_len_conv(char type, va_list args_cpy, int *sign)
 		return (arg_len(arg_int, 10));
 	}
 	if (type == 'u')
-		return (get_len_conv2(type, args_cpy));
+		return (get_len_conv2(type, args_cpy, 0));
 	if (type == 'x' || type == 'X')
-		return (get_len_conv2(type, args_cpy));
+		return (get_len_conv2(type, args_cpy, 0));
 	if (type == 'p')
-		len_conv = arg_len((unsigned long)va_arg(args_cpy, void*), 16) + 2;
+		return (get_len_conv2(type, args_cpy, is_point));
 	if (type == 's')
 		len_conv = ft_strlen(va_arg(args_cpy, char*));
 	if (type == 'c')

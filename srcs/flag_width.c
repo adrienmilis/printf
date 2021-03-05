@@ -58,7 +58,7 @@ int	width_unsigned(va_list args, int width, char type, int base)
 	if (type == 'X')
 		dec_to_hex(arg_unsigned, 0, 1);
 	if (type == 'p')
-		print_pointer(ptr);
+		print_pointer(ptr, 0);
 	if (len_conv < width)
 		return (width);
 	return (len_conv);
@@ -104,7 +104,7 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 	prec = get_width(str, args, args_cpy);
 	while (!is_type(str[i]))
 		i++;
-	len = get_len_conv(str[i], args_cpy, &sign);
+	len = get_len_conv(str[i], args_cpy, &sign, 1);
 	len_print = (prec == 0 && len == -1) ? 0 : 1;
 	if (prec < len && str[i] != 's' && str[i] != 'c' && len != -1)
 		len_print = (sign == 1) ? (len + 1) : len;

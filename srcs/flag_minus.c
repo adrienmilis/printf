@@ -24,7 +24,7 @@ int	flag_minus(const char *str, va_list args, int width)
 	while (!is_type(str[i]) && str[i] != '.')
 		i++;
 	if (is_type(str[i]))
-		len = print_conversions(str[i], args);
+		len = print_conversions(str[i], args, 0);
 	else if (str[i] == '.')
 		len = flag_point(str + i + 1, args, 0, 0);
 	if (len < width)
@@ -65,7 +65,7 @@ int	flag_zero2(const char *str, va_list args, va_list args_cpy, int width)
 		i++;
 	if (width < 0 || str[i] == '-')
 		return (flag_minus(str + 1, args, width));
-	if ((len_conv = get_len_conv(str[i], args_cpy, &sign)) == -1)
+	if ((len_conv = get_len_conv(str[i], args_cpy, &sign, 0)) == -1)
 		len_conv = 1;
 	if (sign == 1)
 		len_conv++;
@@ -73,7 +73,7 @@ int	flag_zero2(const char *str, va_list args, va_list args_cpy, int width)
 		return (flag_zero_int(args, width, len_conv));
 	if (len_conv < width)
 		print_zeroes(width - len_conv);
-	print_conversions(str[i], args);
+	print_conversions(str[i], args, 0);
 	if (len_conv < width)
 		return (width);
 	else
@@ -95,8 +95,7 @@ int	flag_zero(const char *str, va_list args)
 	i = 0;
 	while (!is_type(str[i]) && str[i] != '-' && str[i] != '.')
 		i++;
-	width = get_width(str, args, args_cpy);
-	if (width < 0)
+	if ((width = get_width(str, args, args_cpy)) < 0)
 		return (flag_minus(str, args, width));
 	if (str[i] == '.' && type != '%')
 	{

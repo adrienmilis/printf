@@ -114,6 +114,5 @@ int	flag_point(const char *str, va_list args, int prec_as_param, int prec)
 		}
 		return (ft_putstr(arg_str));
 	}
-	else
-		return (print_conversions(str[0], args));
+	return (print_conversions(str[0], args, 1));
 }

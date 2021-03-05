@@ -92,11 +92,13 @@ int	ft_putnbr(long n, int first_call)
 	return (count);
 }
 
-int	print_pointer(void *ptr)
+int	print_pointer(void *ptr, int is_point)
 {
 	int i;
 
 	ft_putstr("0x");
+	if (is_point == 1 && ptr == 0)
+		return (2);
 	i = dec_to_hex((unsigned long)ptr, 1, 1);
 	return (i + 2);
 }
