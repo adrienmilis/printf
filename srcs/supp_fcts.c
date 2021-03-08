@@ -57,6 +57,7 @@ int		get_len_conv(char type, va_list args_cpy, int *sign, int is_point)
 	int	len_conv;
 	int	arg_int;
 
+	*sign = 0;
 	if (type == '%')
 		return (1);
 	if (type == 'd' || type == 'i')
