@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags2.c                                           :+:      :+:    :+:   */
+/*   flag_width.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amilis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: amilis <amilis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:41:13 by amilis            #+#    #+#             */
-/*   Updated: 2021/02/25 16:41:14 by amilis           ###   ########.fr       */
+/*   Updated: 2021/03/09 14:53:15 by amilis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,15 @@ int	width_point(const char *str, va_list args, int width, va_list args_cpy)
 		i++;
 	len = get_len_conv(str[i], args_cpy, &sign, 1);
 	len_print = (prec == 0 && len == -1) ? 0 : 1;
-	if (prec < len && str[i] != 's' && str[i] != 'c' && len != -1)
+	if (prec < len && str[i] != 's' && str[i] != 'c'
+			&& str[i] != '%' && len != -1)
 		len_print = (sign == 1) ? (len + 1) : len;
-	else if (prec >= len && prec >= 0 && str[i] != 's' && str[i] != 'c')
+	else if (prec >= len && prec >= 0 && str[i] != 's'
+			&& str[i] != 'c' && str[i] != '%')
 		len_print = (sign == 1) ? (prec + 1) : prec;
 	else if (str[i] == 's')
 		len_print = (len > prec && prec >= 0) ? prec : len;
-	if (len_print < width)
-		print_spaces(width - len_print);
+	print_spaces(width - len_print);
 	len = flag_point(str, args, 1, prec);
 	if (len_print < width)
 		return (width);

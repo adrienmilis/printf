@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   supp_fcts.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amilis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: amilis <amilis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:06:51 by amilis            #+#    #+#             */
-/*   Updated: 2021/02/25 16:06:52 by amilis           ###   ########.fr       */
+/*   Updated: 2021/03/09 14:52:17 by amilis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		get_len_conv(char type, va_list args_cpy, int *sign, int is_point)
 	int	len_conv;
 	int	arg_int;
 
+	*sign = 0;
 	if (type == '%')
 		return (1);
 	if (type == 'd' || type == 'i')
