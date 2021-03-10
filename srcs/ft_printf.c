@@ -6,7 +6,7 @@
 /*   By: amilis <amilis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 13:25:43 by amilis            #+#    #+#             */
-/*   Updated: 2021/03/09 14:54:22 by amilis           ###   ########.fr       */
+/*   Updated: 2021/03/10 14:10:15 by amilis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int		flags(const char *str, va_list args)
 
 int		ft_printf_start(const char *str, va_list args)
 {
-	int	i;
-	int	len;
+	int		i;
+	long	len;
 
 	i = 0;
 	len = 0;
@@ -82,7 +82,7 @@ int		ft_printf_start(const char *str, va_list args)
 		if (is_type(str[i]))
 			len += print_conversions(str[i++], args, 0);
 		else if (str[i] == '-' || is_number(str[i]) ||
-					str[i] == '.' || str[i] == '*')
+		str[i] == '.' || str[i] == '*')
 		{
 			len += flags(str + i, args);
 			while (!is_type(str[i]))
@@ -98,10 +98,12 @@ int		ft_printf_start(const char *str, va_list args)
 int		ft_printf(const char *str, ...)
 {
 	va_list args;
-	int		len;
+	long	len;
 
 	va_start(args, str);
 	len = ft_printf_start(str, args);
 	va_end(args);
-	return (len);
+	if (len >= INT_MAX - 1)
+		return (-1);
+	return ((int)len);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   converters.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amilis <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: amilis <amilis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 15:01:05 by amilis            #+#    #+#             */
-/*   Updated: 2021/02/23 11:51:08 by amilis           ###   ########.fr       */
+/*   Updated: 2021/03/10 12:44:13 by amilis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	ft_atoi(const char *str)
 		return (-1);
 	if (nb >= LONG_MAX && signe == -1)
 		return (0);
+	if (nb >= INT_MAX)
+		return (INT_MAX);
 	return ((int)(nb * signe));
 }
 
